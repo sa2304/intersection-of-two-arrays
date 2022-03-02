@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -6,9 +7,21 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> intersection(vector<int> &nums1, vector<int> &nums2) {
-    // FIXME
-    return {};
+  vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    sort(nums1.begin(), nums1.end());
+    auto i1 = unique(nums1.begin(), nums1.end());
+    nums1.resize(distance(nums1.begin(), i1));
+
+    sort(nums2.begin(), nums2.end());
+    auto i2 = unique(nums2.begin(), nums2.end());
+    nums2.resize(distance(nums2.begin(), i2));
+
+    vector<int> result;
+    set_intersection(nums1.begin(), nums1.end(),
+                     nums2.begin(), nums2.end(),
+                     back_inserter(result));
+
+    return result;
   }
 };
 
